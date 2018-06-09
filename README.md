@@ -3,8 +3,8 @@
 ======
 
 ## Heroku & Travis
-* Travis-CI Build: URL
-* Heroku Server: URL
+* Travis-CI Build: https://travis-ci.com/hjmendoza/08-rest
+* Heroku Server: https://haley-rest.herokuapp.com/
 
 ## Configuration 
 * **index.js** - entry point for the application
