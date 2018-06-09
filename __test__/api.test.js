@@ -8,6 +8,7 @@ describe('api', () => {
   it('GET should respond with \'not found\' for valid requests made with an id that was not found', () => {
     return superagent.get('http://localhost:3000/api/v1/cats?id=notfound')
       .catch(err => {
+        console.log(err.status);
         expect(err.status).toEqual(404);
         expect(err.response.text).toBe('not found');
       });
