@@ -2,7 +2,15 @@
 
 const superagent = require('superagent');
 const api = require('../src/api/api.js');
+const app = require('../src/app.js');
 
+beforeAll( () => {
+  app.start(3000);
+});
+
+afterAll( () => {
+  app.stop();
+});
 
 describe('api', () => {
 
