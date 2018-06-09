@@ -25,12 +25,12 @@ router.get('/api/v1/cats', (req, res) => {
     res.write('not found');
     res.end();
   } else if (id) {
-    err.statusCode = 200;
+    res.statusCode = 200;
     res.statusMessage = 'OK';
     res.write(`ID: ${id} was requested`);
     res.end();
   } else {
-    err.statusCode = 400;
+    res.statusCode = 400;
     res.statusMessage = 'bad request';
     res.write('bad request');
     res.end();
@@ -49,7 +49,7 @@ router.post('/api/v1/cats', (req, res) => {
     res.write(JSON.stringify(req.body));
     res.end();
   } else {
-    err.statusCode = 400;
+    res.statusCode = 400;
     res.statusMessage = 'bad request';
     res.write('bad request');
     res.end();
@@ -69,7 +69,7 @@ router.put('/api/v1/cats', (req, res) => {
     res.write(JSON.stringify(req.body));
     res.end();
   } else {
-    err.statusCode = 404;
+    res.statusCode = 404;
     res.statusMessage = 'OK';
     res.write(`Not found`);
     res.end();
@@ -91,7 +91,7 @@ router.delete('/api/v1/cats', (req, res) => {
     res.write(`ID: ${id} was deleted`);
     res.end();
   } else {
-    err.statusCode = 400;
+    res.statusCode = 400;
     res.statusMessage = 'bad request';
     res.write('bad request');
     res.end();

@@ -1,7 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
-let api = require('../src/api/api.js');
+
 
 describe('api', () => {
 
