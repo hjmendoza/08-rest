@@ -9,7 +9,7 @@ describe('api', () => {
     return superagent.get('http://localhost:3000/api/v1/cats?id=notfound')
       .catch(err => {
         console.log(err.status);
-        expect(err.status).toEqual(404);
+        expect(err.statusCode).toEqual(404);
         expect(err.response.text).toBe('not found');
       });
   });
@@ -17,7 +17,7 @@ describe('api', () => {
   it('GET should respond with \'bad request\' if no id was provided in the request', () => {
     return superagent.get('http://localhost:3000/api/v1/cats')
       .catch(err => {
-        expect(err.status).toEqual(400);
+        expect(err.statusCode).toEqual(400);
         expect(err.response.text).toBe('bad request');
       });
   });
@@ -26,7 +26,7 @@ describe('api', () => {
     return superagent
       .get('http://localhost:3000/api/v1/cats?id=123')
       .then(data => {
-        expect(data.status).toEqual(200);
+        expect(data.statusCode).toEqual(200);
         expect(data.text).toBe('ID: 123 was requested');
       });
   });
@@ -34,7 +34,7 @@ describe('api', () => {
   it('POST should respond with \'bad request\' if no request body was provided or the body was invalid', () => {
     return superagent.post('http://localhost:3000/api/v1/cats')
       .catch(err => {
-        expect(err.status).toEqual(400);
+        expect(err.statusCode).toEqual(400);
         expect(err.data.text).toBe('bad request');
       });
   });
@@ -46,7 +46,7 @@ describe('api', () => {
     return superagent.post('http://localhost:3000/api/v1/cats')
       .send(newObj)
       .then(data => {
-        expect(data.status).toEqual(200);
+        expect(data.statusCode).toEqual(200);
         expect(data.text).toBe(`{\"id\":12345,\"name\":\"Kitty Doe\"}`);
       });
   });
@@ -58,7 +58,7 @@ describe('api', () => {
     return superagent.put('http://localhost:3000/api/v1/cats')
       .send(newObj)
       .then(data => {
-        expect(data.status).toEqual(200);
+        expect(data.statusCode).toEqual(200);
         expect(data.text).toBe(`{\"id\":12345,\"name\":\"Kitty Doe\"}`);
       });
   });
@@ -67,7 +67,7 @@ describe('api', () => {
     return superagent
       .delete('http://localhost:3000/api/v1/cats?id=123')
       .then(data => {
-        expect(data.status).toEqual(200);
+        expect(data.statusCode).toEqual(200);
         expect(data.text).toBe('ID: 123 was deleted');
       });
   });
