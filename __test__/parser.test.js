@@ -7,14 +7,20 @@ describe('URL Parser', () => {
   it('requires a request object', () => {
     let req = undefined;
     return parser(req)
-      .then( response => false )
+      .then( function () {
+        let response = false;
+        return response;
+      })
       .catch( err => expect(err).toBeDefined() );
   });
 
   it('requires a req object with a url', () => {
     let req = {};
     return parser(req)
-      .then( response => false )
+      .then( function () {
+        let response = false;
+        return response;
+      })
       .catch( err => expect(err).toBeDefined() );
   });
 
@@ -22,7 +28,10 @@ describe('URL Parser', () => {
     let req = { url: 'http://localhost' };
     return parser(req)
       .then( request => expect(typeof request.url).toEqual('object') )
-      .catch( err => false );
+      .catch( function () {
+        let err = false;
+        return err;
+      } );
   });
 
   it('given a complicated url, does all the things', () => {

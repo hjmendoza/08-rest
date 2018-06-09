@@ -1,7 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
-const api = require('../src/api/api.js');
+// const api = require('../src/api/api.js');
 const app = require('../src/app.js');
 
 beforeAll( () => {
@@ -49,26 +49,22 @@ describe('api', () => {
   });
 
   it('POST should respond with response with the POST\'d JSON as the content', () =>{
-    let newObj = {
-      id:12345,
-      name:'Kitty Doe'};
+    let newObj = {id:12345};
     return superagent.post('http://localhost:3000/api/v1/cats')
       .send(newObj)
       .then(data => {
         expect(data.status).toEqual(200);
-        expect(data.text).toBe(`{\"id\":12345,\"name\":\"Kitty Doe\"}`);
+        expect(data.text).toEqual(expect.stringContaining('{"id":12345}'));
       });
   });
 
   it('PUT should return a 200 response with the JSON as the content', () => {
-    let newObj = {
-      id:12345,
-      name:'Kitty Doe'};
+    let newObj = {id:12345};
     return superagent.put('http://localhost:3000/api/v1/cats')
       .send(newObj)
       .then(data => {
         expect(data.status).toEqual(200);
-        expect(data.text).toBe(`{\"id\":12345,\"name\":\"Kitty Doe\"}`);
+        expect(data.text).toEqual(expect.stringContaining('{"id":12345}'));
       });
   });
 
