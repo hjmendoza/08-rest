@@ -3,13 +3,11 @@
 const router = require('../lib/router.js');
 
 /**
- * GET Route (/)
- * Accepts an optional "name" query string parameter and says Hello
- * test with httpie:
- *     http http://localhost:8080
- *     http http://localhost:8080?name=John
+ * GET Route (/api/v1/cats)
+ * Accepts an id and returns it, if valid
  */
-router.get('/', (req,res) => {
+
+router.get('/', (req, res) => {
   res.statusCode = 200;
   res.statusMessage = 'OK';
   let name = req.query.name || '';
@@ -21,12 +19,12 @@ router.get('/api/v1/cats', (req, res) => {
 
   const id = req.query.id;
 
-  if(id === 'notfound'){
+  if (id === 'notfound') {
     res.statusCode = 404;
     res.statusMessage = 'not found';
     res.write('not found');
     res.end();
-  } else if(id) {
+  } else if (id) {
     res.statusCode = 200;
     res.statusMessage = 'OK';
     res.write(`ID: ${id} was requested`);
@@ -39,18 +37,43 @@ router.get('/api/v1/cats', (req, res) => {
   }
 });
 
-
 /**
- * POST Route (/data)
+ * POST Route (/api/v1/cats)
  * Accepts a JSON object and simply regurgitates it back to the browser
- * test with httpie:
- *     echo '{"title":"Go Home","content":"foobar"}' | http post http://localhost:8080/data
  */
-router.post('/data', (req,res) => {
-  res.statusCode = 200;
-  res.statusMessage = 'OK';
-  res.write( JSON.stringify(req.body) );
-  res.end();
+router.post('/api/v1/cats', (req, res) => {
+
+  if (req.body) {
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.write(JSON.stringify(req.body));
+    res.end();
+  } else{
+    res.statusCode = 400;
+    res.statusMessage = 'bad request';
+    res.write('bad request');
+  }
 });
 
+/**
+ * PUT Route (/api/v1/cats)
+ * Accepts an id as a query string parameter to identify a specific resource. Data passed as stringified JSON.
+ */
+
+router.put('/api/v1/cats', (req,res) => {
+
+  const id = req.query.id;
+
+  if(id) {
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.write(JSON.stringify(req.body) );
+    res.end();
+  } else {
+    res.statusCode = 404;
+    res.statusMessage = 'OK';
+    res.write(`Not found`);
+    res.end();
+  }
+});
 module.exports = {};
