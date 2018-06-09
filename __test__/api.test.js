@@ -1,13 +1,13 @@
 'use strict';
 
 const superagent = require('superagent');
+let api = require('../src/api/api.js');
 
 describe('api', () => {
 
   it('GET should respond with \'not found\' for valid requests made with an id that was not found', () => {
     return superagent.get('http://localhost:3000/api/v1/cats?id=notfound')
       .catch(err => {
-        console.log(err.status);
         expect(err.status).toEqual(404);
         expect(err.response.text).toBe('not found');
       });
@@ -47,6 +47,27 @@ describe('api', () => {
       .then(data => {
         expect(data.status).toEqual(200);
         expect(data.text).toBe(`{\"id\":12345,\"name\":\"Kitty Doe\"}`);
+      });
+  });
+
+  it('PUT should return a 200 response with the JSON as the content', () => {
+    let newObj = {
+      id:12345,
+      name:'Kitty Doe'};
+    return superagent.put('http://localhost:3000/api/v1/cats')
+      .send(newObj)
+      .then(data => {
+        expect(data.status).toEqual(200);
+        expect(data.text).toBe(`{\"id\":12345,\"name\":\"Kitty Doe\"}`);
+      });
+  });
+
+  it('DELETE should return a 200 response, and a message that states "ID: " was deleted', () => {
+    return superagent
+      .delete('http://localhost:3000/api/v1/cats?id=123')
+      .then(data => {
+        expect(data.status).toEqual(200);
+        expect(data.text).toBe('ID: 123 was deleted');
       });
   });
 });

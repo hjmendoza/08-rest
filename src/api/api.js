@@ -48,10 +48,11 @@ router.post('/api/v1/cats', (req, res) => {
     res.statusMessage = 'OK';
     res.write(JSON.stringify(req.body));
     res.end();
-  } else{
+  } else {
     res.statusCode = 400;
     res.statusMessage = 'bad request';
     res.write('bad request');
+    res.end();
   }
 });
 
@@ -60,14 +61,12 @@ router.post('/api/v1/cats', (req, res) => {
  * Accepts an id as a query string parameter to identify a specific resource. Data passed as stringified JSON.
  */
 
-router.put('/api/v1/cats', (req,res) => {
+router.put('/api/v1/cats', (req, res) => {
 
-  const id = req.query.id;
-
-  if(id) {
+  if (req.body) {
     res.statusCode = 200;
     res.statusMessage = 'OK';
-    res.write(JSON.stringify(req.body) );
+    res.write(JSON.stringify(req.body));
     res.end();
   } else {
     res.statusCode = 404;
@@ -76,4 +75,27 @@ router.put('/api/v1/cats', (req,res) => {
     res.end();
   }
 });
+
+/**
+ * DELETE Route (/api/v1/cats)
+ * receives an ID as a query string parameter to identify a specific resource. Returns 200 response, and a message with deleted ID
+ */
+
+router.delete('/api/v1/cats', (req, res) => {
+
+  const id = req.query.id;
+
+  if (id) {
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.write(`ID: ${id} was deleted`);
+    res.end();
+  } else {
+    res.statusCode = 400;
+    res.statusMessage = 'bad request';
+    res.write('bad request');
+    res.end();
+  }
+});
+
 module.exports = {};
